@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'HomePage.dart';
-// import 'package:firebase_core/firebase_core.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'SignUp.dart';
+import 'VerifyEmailPage.dart';
+// import 'SignUp.dart';
 
 class authScreen extends StatefulWidget {
   const authScreen({super.key});
@@ -12,6 +13,7 @@ class authScreen extends StatefulWidget {
 
 class _authScreen extends State<authScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -54,7 +56,7 @@ class _authScreen extends State<authScreen> {
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Signup()));
+            context, MaterialPageRoute(builder: (context) => VerifyEmailPage()));
       }
     } on FirebaseAuthException catch (e) {
       String message = 'An error occurred';

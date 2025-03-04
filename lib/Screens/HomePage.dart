@@ -37,15 +37,6 @@ class _homepage extends State<Homepage> {
     }
   }
 
-  Future<String?> getProfilePicture() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.photoURL; // URL of the profile picture
-    } else {
-      return null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,28 +58,6 @@ class _homepage extends State<Homepage> {
               }
             },
           ),
-          FutureBuilder<String?>(
-              future: getProfilePicture(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Icon(Icons.error, size: 50);
-                } else if (snapshot.hasData && snapshot.data != null) {
-                  // If there is a profile picture URL
-                  return CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(snapshot.data!),
-                  );
-                } else {
-                  // If no profile picture is available
-                  return CircleAvatar(
-                    radius: 50,
-                    child: Icon(Icons.person, size: 50),
-                  );
-                }
-              }
-            ),
         ],
       ),
       body: SingleChildScrollView(
